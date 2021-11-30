@@ -1,0 +1,13 @@
+let arrLength = arr.length;
+    let pos = 0, neg = 0, zero = 0;
+    
+    arr.forEach((elm)=>{
+        if(elm > 0){
+            pos++;
+        }else if(elm < 0){
+            neg++;
+        }else{
+            zero++;
+        }
+    });
+    console.log(`${pos/arrLength}\n${neg/arrLength}\n${zero/arrLength}`);
