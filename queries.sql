@@ -89,7 +89,7 @@ UPDATE animals SET owner_id = 4 WHERE name = 'Charmander' OR name = 'Squirtle' O
 UPDATE animals SET owner_id = 5 WHERE name = 'Angemon' OR name = 'Boarmon';
 /*Write queries (using JOIN) to answer the following questions:
 What animals belong to Melody Pond?*/
-SELECT full_name, name FROM owners JOIN animals ON animals.owner_id = owners.id WHERE owners.id = 4;
+SELECT full_name, name FROM owners JOIN animals ON animals.owner_id = owners.id WHERE owners.full_name = 'Melody Pond';
 /*List of all animals that are pokemon (their type is Pokemon).*/
 SELECT species.name as specie, animals.name FROM animals JOIN species ON animals.species_id = species.id WHERE species.name = 'Pokemon';
 /*List all owners and their animals, remember to include those that don't own any animal.*/
