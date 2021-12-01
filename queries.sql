@@ -70,3 +70,35 @@ SELECT SUM(escape_attempts), neutered FROM animals GROUP BY neutered;
 SELECT species, MIN(weight_kg) as minimum_weight, MAX(weight_kg) as maximum_weight FROM animals GROUP BY species;
 /*What is the average number of escape attempts per animal type of those born between 1990 and 2000?*/
 SELECT species, AVG(escape_attempts) FROM animals  WHERE date_of_birth BETWEEN '1990-01-01' AND '2000-01-01' GROUP BY species;
+/*01-12
+Modify your inserted animals so it includes the species_id value:
+If the name ends in "mon" it will be Digimon*/
+UPDATE animals SET species_id = 2 WHERE name LIKE '%mon';
+/*All other animals are Pokemon*/
+UPDATE animals SET species_id = 1 WHERE species_id IS NULL;
+/*Modify your inserted animals to include owner information (owner_id):
+Sam Smith owns Agumon.*/
+UPDATE animals SET owner_id = 1 WHERE name = 'Agumon';
+/*Jennifer Orwell owns Gabumon and Pikachu.*/
+UPDATE animals SET owner_id = 2 WHERE name = 'Gabumon' OR name = 'Pikachu';
+/*Bob owns Devimon and Plantmon.*/
+UPDATE animals SET owner_id = 3 WHERE name = 'Plantmon' OR name = 'Devimon';
+/*Melody Pond owns Charmander, Squirtle, and Blossom.*/
+UPDATE animals SET owner_id = 4 WHERE name = 'Charmander' OR name = 'Squirtle' OR name = 'Blossom';
+/*Dean Winchester owns Angemon and Boarmon.*/
+UPDATE animals SET owner_id = 5 WHERE name = 'Angemon' OR name = 'Boarmon';
+/*Write queries (using JOIN) to answer the following questions:
+What animals belong to Melody Pond?*/
+SELECT full_name, name FROM owners JOIN animals ON animals.owner_id = owners.id WHERE owners.id = 4;
+/*List of all animals that are pokemon (their type is Pokemon).*/
+SELECT species.name as specie, animals.name FROM animals JOIN species ON animals.species_id = species.id WHERE species.name = 'Pokemon';
+/*List all owners and their animals, remember to include those that don't own any animal.*/
+SELECT owners.full_name as owner, animals.name as animal FROM animals RIGHT JOIN owners ON animals.owner_id = owners.id;
+/*How many animals are there per species?*/
+SELECT COUNT(*) as quantity, species.name FROM animals JOIN species ON animals.species_id = species.id GROUP BY species.name;
+/*List all Digimon owned by Jennifer Orwell.*/
+SELECT full_name as owner, animals.name, species.name as specie FROM owners JOIN animals ON animals.owner_id = owners.id JOIN species ON species.id = animals.species_id WHERE owners.full_name = 'Jennifer Orwell' AND species.name = 'Digimon'; 
+/*List all animals owned by Dean Winchester that haven't tried to escape.*/
+SELECT full_name, animals.name as Animal, escape_attempts FROM owners JOIN animals ON animals.owner_id = owners.id WHERE owners.full_name = 'Dean Winchester' AND animals.escape_attempts < 1;
+/*Who owns the most animals?*/
+SELECT full_name, COUNT(*) FROM animals JOIN owners ON animals.owner_id = owners.id GROUP BY owners.full_name ORDER BY count DESC;
