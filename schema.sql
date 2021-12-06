@@ -57,3 +57,6 @@ CREATE TABLE visits (
     FOREIGN KEY(animal_id) REFERENCES animals(id),
     FOREIGN KEY(vet_id) REFERENCES vets(id) 
 );
+
+/*06/12*/
+ALTER TABLE owners ADD COLUMN email VARCHAR(120);
